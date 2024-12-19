@@ -49,7 +49,25 @@ bool Search_Element(Node* root, int data){
     }
 }
 
+/* 3 possible cases exist for deleting a node from a tree
+Case 1: Node has NO child
+Case 2: Node has ONE child
+Case 3: Node has TWO children
 
+Case 1: Simply set root-> right or root->left to NULL
+Case 2: Make the parent link directly to the grandchild
+Case 3: (i) Find the MINIMUM value in the LEFT sub-tree
+        (ii)Copy the value in the node to be deleted. Essentially, replace that value with a new one
+        (iii)Delete the duplicate/copied value from the right subtree
+                                OR
+        (i) Find the MAXIMUM value in the LEFT sub-tree
+        (ii)Copy the value in the node to be deleted. Essentially, replace that value with a new one
+        (iii)Delete the duplicate/copied value from the right subtree 
+*/
+Node* Delete_Node(Node* root, int data){     
+
+    return root;
+}
 int main(){
     Node* root = new Node;
     root = Create_Root(9);
