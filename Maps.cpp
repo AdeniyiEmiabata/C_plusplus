@@ -24,7 +24,6 @@ std::cout << Map_Example[2];
 
 // insert elements like so
 Map_Example.insert({8, "hannah"});
-
 // check if a value exists through its key
 bool is_contained = Map_Example.contains(3);
 
@@ -33,7 +32,7 @@ bool is_empty = Map_Example.empty();
 
 //size of map
 int length = Map_Example.size();
-
+std::cout << "Length is " << length << "\n";
 // find element
 std::map<int, string>::iterator an_iterator = Map_Example.find(2);      //returns an iterator to key "2"
 std::map<int, string>::iterator another_iterator = std::next(Map_Example.begin(), 3); //returns an iterator to the 3rd key (2 positions after the 1st)
