@@ -17,12 +17,21 @@ set<string> NFC_North = {"NFC_North","Green Bay Packers", "Minnesota Vikings", "
 set<string> NFC_South = {"NFC_South","Tampa Bay Buccaneers", "New Orleans Saints", "Carolina Panthers", "Atlanta Falcons"};
 
 // List of Positions (Sides of the Ball)
-set<string> Defense = {"DT", "DE", "CB", "OLB", "LB", "FS", "SS", "Defense"};
+set<string> Defense = {"DT", "DE", "CB", "OLB", "MLB", "FS", "SS", "Defense"};
 set<string> Offense = {"QB", "LT", "C", "RT", "LG", "RG", "TE", "FB", "WR", "RB", "Offense"};
 
+// Position Groups
+set<string> Offensive_Line = {"LT", "C", "RT", "LG", "RG", "Offensive Line"};
+set<string> Receivers = {"WR", "TE", "Receiver"};
+set<string> Running_Backs = {"FB", "RB", "Running Back"}; 
+
+set<string> Defensive_Line = {"DT", "DE", "Defensive Line"};
+set<string> Secondary = {"CB", "FS", "SS", "Secondary"};
+set<string> Linebackers = {"MLB", "OLB", "Linebacker"};
+
 vector<set<string>> All_Divisions;
-
-
+vector<set<string>> Offensive_Position_Groups;
+vector<set<string>> Defensive_Position_Groups;
 
 
 int NFL_Players::Calculate_Player_Relationship_Score (NFL_Players& PlayerA_Attributes, NFL_Players& PlayerB_Attributes){
@@ -32,7 +41,7 @@ int NFL_Players::Calculate_Player_Relationship_Score (NFL_Players& PlayerA_Attri
         Score += 80;
         if(PlayerA_Attributes.Position == PlayerB_Attributes.Position){
             Score += 10;
-            if (PlayerA_Attributes.Years_of_Exp == PlayerB_Attributes.Years_of_Exp){
+            if (PlayerA_Attributes.Draft_Year == PlayerB_Attributes.Draft_Year){
                 Score += 5;
             }
         }
@@ -45,7 +54,7 @@ int NFL_Players::Calculate_Player_Relationship_Score (NFL_Players& PlayerA_Attri
         Score += 50;
         if(PlayerA_Attributes.Position == PlayerB_Attributes.Position){
             Score += 10;
-            if (PlayerA_Attributes.Years_of_Exp == PlayerB_Attributes.Years_of_Exp){
+            if (PlayerA_Attributes.Draft_Year == PlayerB_Attributes.Draft_Year){
                 Score += 5;
             }
         }
@@ -58,7 +67,7 @@ int NFL_Players::Calculate_Player_Relationship_Score (NFL_Players& PlayerA_Attri
         Score+= 40;
         if(PlayerA_Attributes.Position == PlayerB_Attributes.Position){
             Score += 10;
-            if (abs(PlayerA_Attributes.Years_of_Exp - PlayerB_Attributes.Years_of_Exp) < 2){
+            if (abs(PlayerA_Attributes.Draft_Year - PlayerB_Attributes.Draft_Year) < 2){
                 Score += 10;
             }
         }
@@ -66,19 +75,19 @@ int NFL_Players::Calculate_Player_Relationship_Score (NFL_Players& PlayerA_Attri
 
     else if(PlayerA_Attributes.Position == PlayerB_Attributes.Position){
         Score += 30;
-        if (PlayerA_Attributes.Years_of_Exp == PlayerB_Attributes.Years_of_Exp){
+        if (PlayerA_Attributes.Draft_Year == PlayerB_Attributes.Draft_Year){
                 Score += 10;
             }
     }
 
-    else if(PlayerA_Attributes.Years_of_Exp == PlayerB_Attributes.Years_of_Exp){
+    else if(PlayerA_Attributes.Draft_Year == PlayerB_Attributes.Draft_Year){
         Score += 20;
     }
 
     return Score;
 
 
-};
+}
 
 void NFL_Players::Relationship_Remarks(NFL_Players& PlayerA_Attributes, NFL_Players& PlayerB_Attributes){
 
@@ -137,11 +146,11 @@ NFL_Players Generate_Player(){
     string Division;
     string Position;
     string College;
-    int Years_of_Exp;
+    int Draft_Year;
 
     cout << "\n\n------Hit Enter to Start!-------";
 
-    //to ensure the last cin>> for Years_of_Exp does not affect the first getline for the 2nd player getline(cin, Name): Needs Fixing
+    //to ensure the last cin>> for Draft_Year does not affect the first getline for the 2nd player getline(cin, Name): Needs Fixing
     cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     
     cout << "\nNOTE: Be mindful of letter casing when entering details!" << "\n";
@@ -158,12 +167,12 @@ NFL_Players Generate_Player(){
     cout << "\n\nInput Player College: " << "\n";
     getline(cin, College);
 
-    cout << "\n\nInput Player's Years of Experience: " << "\n";
-    cin >> Years_of_Exp;
+    cout << "\n\nInput Player's Draft Year: " << "\n";
+    cin >> Draft_Year;
 
     cout << "\n\n";
     Division = Search_Division(Team);
-    NFL_Players Player_Details(Name, Team, Division, Position, College, Years_of_Exp);
+    NFL_Players Player_Details(Name, Team, Division, Position, College, Draft_Year);
     return Player_Details;
 
 }
