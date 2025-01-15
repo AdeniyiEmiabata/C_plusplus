@@ -15,4 +15,4 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 include(CPack)
 
-add_executable(CMake_Testing main.cpp)
+add_executable(CMake_Testing main.cpp NFL_Players.cpp)

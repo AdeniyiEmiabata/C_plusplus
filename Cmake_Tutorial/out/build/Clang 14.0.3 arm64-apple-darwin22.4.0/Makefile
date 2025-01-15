@@ -523,6 +523,30 @@ CMake_Testing/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/CMake_Testing.dir/build.make CMakeFiles/CMake_Testing.dir/build
 .PHONY : CMake_Testing/fast
 
+NFL_Players.o: NFL_Players.cpp.o
+.PHONY : NFL_Players.o
+
+# target to build an object file
+NFL_Players.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CMake_Testing.dir/build.make CMakeFiles/CMake_Testing.dir/NFL_Players.cpp.o
+.PHONY : NFL_Players.cpp.o
+
+NFL_Players.i: NFL_Players.cpp.i
+.PHONY : NFL_Players.i
+
+# target to preprocess a source file
+NFL_Players.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CMake_Testing.dir/build.make CMakeFiles/CMake_Testing.dir/NFL_Players.cpp.i
+.PHONY : NFL_Players.cpp.i
+
+NFL_Players.s: NFL_Players.cpp.s
+.PHONY : NFL_Players.s
+
+# target to generate assembly for a file
+NFL_Players.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CMake_Testing.dir/build.make CMakeFiles/CMake_Testing.dir/NFL_Players.cpp.s
+.PHONY : NFL_Players.cpp.s
+
 main.o: main.cpp.o
 .PHONY : main.o
 
@@ -587,6 +611,9 @@ help:
 	@echo "... NightlyTest"
 	@echo "... NightlyUpdate"
 	@echo "... CMake_Testing"
+	@echo "... NFL_Players.o"
+	@echo "... NFL_Players.i"
+	@echo "... NFL_Players.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
