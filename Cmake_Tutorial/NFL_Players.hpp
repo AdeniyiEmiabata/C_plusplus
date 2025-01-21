@@ -37,11 +37,12 @@ string Team;
 string Division;
 string Position;
 string College;
+string Position_Group;
 int Draft_Year;
 // string Phase (to be added)
 public:
-NFL_Players(string Name, string Team, string Division, string Position, string College, int Draft_Year):Name(Name), Team(Team), Division(Division), 
-Position(Position), College(College), Draft_Year(Draft_Year){};
+NFL_Players(string Name, string Team, string Division, string Position, string College, string Position_Group, int Draft_Year):Name(Name), Team(Team), Division(Division), 
+Position(Position), College(College), Position_Group(Position_Group), Draft_Year(Draft_Year){};
 
 ~NFL_Players(){};
 
@@ -54,6 +55,3 @@ string Search_Division(string Team_Name);
 NFL_Players Generate_Player();
 
 string Search_PositionGroup(string Position);
-
-
-

@@ -21,6 +21,8 @@ int main(){
     // (11) add set(CMAKE_CXX_STANDARD_REQUIRED ON)
             //  set(CMAKE_CXX_EXTENSIONS OFF) to support (9)
     NFL_Players Player_1 = Generate_Player();
+    string empty;
+    getline(cin, empty);
     NFL_Players Player_2 = Generate_Player();
 
     Player_1.Calculate_Player_Relationship_Score(Player_1, Player_2);

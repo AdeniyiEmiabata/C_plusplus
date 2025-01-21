@@ -39,49 +39,66 @@ int NFL_Players::Calculate_Player_Relationship_Score (NFL_Players& PlayerA_Attri
     
     if(PlayerA_Attributes.Team == PlayerB_Attributes.Team){
         Score += 80;
-        if(PlayerA_Attributes.Position == PlayerB_Attributes.Position){
+
+        if (PlayerA_Attributes.Position_Group == PlayerB_Attributes.Position_Group){
             Score += 10;
-            if (PlayerA_Attributes.Draft_Year == PlayerB_Attributes.Draft_Year){
-                Score += 5;
+            if (PlayerA_Attributes.Position == Position){
+                Score+= 7;
             }
         }
+
         if (PlayerA_Attributes.College == PlayerB_Attributes.College){
-            Score += 5;
+            Score += 3;
         }
+
     }
 
     else if (PlayerA_Attributes.Division == PlayerB_Attributes.Division){
-        Score += 50;
-        if(PlayerA_Attributes.Position == PlayerB_Attributes.Position){
+        Score += 60;
+
+        if (PlayerA_Attributes.Position_Group == PlayerB_Attributes.Position_Group){
             Score += 10;
-            if (PlayerA_Attributes.Draft_Year == PlayerB_Attributes.Draft_Year){
-                Score += 5;
+            if (PlayerA_Attributes.Position == Position){
+                Score+= 7;
             }
         }
+
         if (PlayerA_Attributes.College == PlayerB_Attributes.College){
-            Score += 5;
+            Score += 3;
+            if(abs(PlayerA_Attributes.Draft_Year - PlayerB_Attributes.Draft_Year) < 2){
+                Score += 5;
+            }
         }
     }
 
     else if(PlayerA_Attributes.College == PlayerB_Attributes.College){
-        Score+= 40;
-        if(PlayerA_Attributes.Position == PlayerB_Attributes.Position){
+        Score+= 50;
+
+        if ((PlayerA_Attributes.Position_Group == PlayerB_Attributes.Position_Group) && (abs(PlayerA_Attributes.Draft_Year - PlayerB_Attributes.Draft_Year) < 2)){
             Score += 10;
+            if (PlayerA_Attributes.Position == Position){
+                Score+= 10;
+            }
             if (abs(PlayerA_Attributes.Draft_Year - PlayerB_Attributes.Draft_Year) < 2){
                 Score += 10;
             }
         }
+
+        if (abs(PlayerA_Attributes.Draft_Year - PlayerB_Attributes.Draft_Year) < 2){
+                Score += 5;
+            }
+        
     }
 
-    else if(PlayerA_Attributes.Position == PlayerB_Attributes.Position){
+    else if(PlayerA_Attributes.Position_Group == PlayerB_Attributes.Position_Group){
         Score += 30;
-        if (PlayerA_Attributes.Draft_Year == PlayerB_Attributes.Draft_Year){
+        if (PlayerA_Attributes.Position == PlayerB_Attributes.Position){
                 Score += 10;
             }
-    }
 
-    else if(PlayerA_Attributes.Draft_Year == PlayerB_Attributes.Draft_Year){
-        Score += 20;
+        if (PlayerA_Attributes.Draft_Year == PlayerB_Attributes.Draft_Year){
+                Score += 5;
+            }
     }
 
     return Score;
@@ -146,6 +163,7 @@ NFL_Players Generate_Player(){
     string Division;
     string Position;
     string College;
+    string Position_Group;
     int Draft_Year;
 
     cout << "\n\n------Hit Enter to Start!-------";
@@ -172,22 +190,15 @@ NFL_Players Generate_Player(){
 
     cout << "\n\n";
     Division = Search_Division(Team);
-    NFL_Players Player_Details(Name, Team, Division, Position, College, Draft_Year);
+    Position_Group = Search_PositionGroup(Position);
+    NFL_Players Player_Details(Name, Team, Division, Position, College, Position_Group, Draft_Year);
+
     return Player_Details;
 
 }
 
 string Search_Division(string Team_Name){
 
-    All_Divisions.push_back(AFC_East);
-    All_Divisions.push_back(AFC_West);
-    All_Divisions.push_back(AFC_North);
-    All_Divisions.push_back(AFC_South);
-    All_Divisions.push_back(NFC_East);
-    All_Divisions.push_back(NFC_West);
-    All_Divisions.push_back(NFC_North);
-    All_Divisions.push_back(NFC_South);
-    
     string Division;
 
     for(vector<set<string>>::iterator Iter = All_Divisions.begin(); Iter != All_Divisions.end(); Iter++){
@@ -200,4 +211,31 @@ string Search_Division(string Team_Name){
     Division = "Team Not Found! Restart and Check your spelling and/or letter casing\n\n";
     return Division;
 
+}
+
+string Search_PositionGroup(string Position){
+
+    string Position_Group = "Position group not found! Check spelling of position!";
+    Offensive_Position_Groups.push_back(Offensive_Line);
+    Offensive_Position_Groups.push_back(Receivers);
+    Offensive_Position_Groups.push_back(Running_Backs);
+
+    Defensive_Position_Groups.push_back(Defensive_Line);
+    Defensive_Position_Groups.push_back(Secondary);
+    Defensive_Position_Groups.push_back(Linebackers);
+
+    for(vector<set<string>>::iterator Iter = Offensive_Position_Groups.begin(); Iter != Offensive_Position_Groups.end(); Iter++){
+        if((*Iter).contains(Position)){
+            Position_Group = *(std::prev((*Iter).end(),1));
+        }
+    }
+
+    for(vector<set<string>>::iterator Iter = Defensive_Position_Groups.begin(); Iter != Defensive_Position_Groups.end(); Iter++){
+        if((*Iter).contains(Position)){
+            Position_Group = *(std::prev((*Iter).end(),1));
+        }
+    }
+
+
+    return Position_Group;
 }

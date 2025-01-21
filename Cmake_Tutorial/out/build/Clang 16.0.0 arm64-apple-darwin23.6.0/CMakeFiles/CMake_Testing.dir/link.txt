@@ -1,0 +1,1 @@
+/usr/bin/clang++ -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk -mmacosx-version-min=14.6 -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/CMake_Testing.dir/main.cpp.o CMakeFiles/CMake_Testing.dir/NFL_Players.cpp.o -o CMake_Testing 
