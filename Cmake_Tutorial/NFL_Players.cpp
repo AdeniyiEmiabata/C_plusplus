@@ -17,17 +17,17 @@ set<string> NFC_North = {"NFC_North","Green Bay Packers", "Minnesota Vikings", "
 set<string> NFC_South = {"NFC_South","Tampa Bay Buccaneers", "New Orleans Saints", "Carolina Panthers", "Atlanta Falcons"};
 
 // List of Positions (Sides of the Ball)
-set<string> Defense = {"DT", "DE", "CB", "OLB", "MLB", "FS", "SS", "Defense"};
-set<string> Offense = {"QB", "LT", "C", "RT", "LG", "RG", "TE", "FB", "WR", "RB", "Offense"};
+vector<string> Defense = {"Defensive Linemen", "Defensive Backs", "Linebackers"};
+vector<string> Offense = {"Offensive Linemen", "Receivers", "Running Backs"};
 
 // Position Groups
-set<string> Offensive_Line = {"LT", "C", "RT", "LG", "RG", "Offensive Line"};
-set<string> Receivers = {"WR", "TE", "Receiver"};
-set<string> Running_Backs = {"FB", "RB", "Running Back"}; 
+set<string> Offensive_Line = {"LT", "C", "RT", "LG", "RG", "Offensive Linemen"};
+set<string> Receivers = {"WR", "TE", "Receivers"};
+set<string> Running_Backs = {"FB", "RB", "Running Backs"}; 
 
-set<string> Defensive_Line = {"DT", "DE", "Defensive Line"};
-set<string> Secondary = {"CB", "FS", "SS", "Secondary"};
-set<string> Linebackers = {"MLB", "OLB", "Linebacker"};
+set<string> Defensive_Line = {"DT", "DE", "Defensive Linemen"};
+set<string> Defensive_Backs = {"CB", "FS", "SS", "Defensive Backs"};
+set<string> Linebackers = {"MLB", "OLB", "Linebackers"};
 
 vector<set<string>> All_Divisions;
 vector<set<string>> Offensive_Position_Groups;
@@ -50,7 +50,9 @@ int NFL_Players::Calculate_Player_Relationship_Score (NFL_Players& PlayerA_Attri
         if (PlayerA_Attributes.College == PlayerB_Attributes.College){
             Score += 3;
         }
-
+        else if (abs(PlayerA_Attributes.Draft_Year - PlayerB_Attributes.Draft_Year) < 2){
+            Score += 3;
+        }
     }
 
     else if (PlayerA_Attributes.Division == PlayerB_Attributes.Division){
@@ -69,24 +71,25 @@ int NFL_Players::Calculate_Player_Relationship_Score (NFL_Players& PlayerA_Attri
                 Score += 5;
             }
         }
+
+        else if(abs(PlayerA_Attributes.Draft_Year - PlayerB_Attributes.Draft_Year) < 2){
+                Score += 3;
+        }
     }
 
     else if(PlayerA_Attributes.College == PlayerB_Attributes.College){
         Score+= 50;
 
         if ((PlayerA_Attributes.Position_Group == PlayerB_Attributes.Position_Group) && (abs(PlayerA_Attributes.Draft_Year - PlayerB_Attributes.Draft_Year) < 2)){
-            Score += 10;
+            Score += 13;
             if (PlayerA_Attributes.Position == Position){
-                Score+= 10;
-            }
-            if (abs(PlayerA_Attributes.Draft_Year - PlayerB_Attributes.Draft_Year) < 2){
-                Score += 10;
+                Score+= 8;
             }
         }
 
-        if (abs(PlayerA_Attributes.Draft_Year - PlayerB_Attributes.Draft_Year) < 2){
+        else if (abs(PlayerA_Attributes.Draft_Year - PlayerB_Attributes.Draft_Year) < 2){
                 Score += 5;
-            }
+        }
         
     }
 
@@ -112,6 +115,9 @@ void NFL_Players::Relationship_Remarks(NFL_Players& PlayerA_Attributes, NFL_Play
 
     if (Relationship_Score >= 20 && Relationship_Score < 45){
         cout << PlayerA_Attributes.Name << " and " << PlayerB_Attributes.Name << " have a low chemistry score of " << Relationship_Score << "\n";
+        if (PlayerA_Attributes.Position_Group == PlayerB_Attributes.Position_Group){
+            std::cout << "These players may weaken your " << PlayerA_Attributes.Position_Group << " group";
+        }
         cout << "We do not recommend having these players in the same team. Refresh the pool for better options!" << "\n";
         cout << "Low relationship scores affect player performance!" << "\n";
         return;
@@ -119,6 +125,9 @@ void NFL_Players::Relationship_Remarks(NFL_Players& PlayerA_Attributes, NFL_Play
 
     else if (Relationship_Score >= 45 && Relationship_Score < 65){
         cout << PlayerA_Attributes.Name << " and " << PlayerB_Attributes.Name << " have a below average chemistry score of " << Relationship_Score << "\n";
+        if (PlayerA_Attributes.Position_Group == PlayerB_Attributes.Position_Group){
+            std::cout << "These players may weaken your " << PlayerA_Attributes.Position_Group << " group";
+        }
         cout << "These players are compatible. Reinforce your team with other players with higher relationship scores" << "\n";
         cout << "Low relationship scores affect player performance!" << "\n";
         return;
@@ -132,6 +141,9 @@ void NFL_Players::Relationship_Remarks(NFL_Players& PlayerA_Attributes, NFL_Play
 
     else if (Relationship_Score >= 75 && Relationship_Score < 85){
         cout << PlayerA_Attributes.Name << " and " << PlayerB_Attributes.Name << " have a good chemistry score of " << Relationship_Score << "\n";
+        if (PlayerA_Attributes.Position_Group == PlayerB_Attributes.Position_Group){
+            std::cout << "These players will strengthen your " << PlayerA_Attributes.Position_Group << " room";
+        }
         cout << "These players are very compatible. Reinforce your team with more players with good relationship scores" << "\n";
         cout << "High relationship scores improve player performance" << "\n";
         return;
@@ -139,6 +151,9 @@ void NFL_Players::Relationship_Remarks(NFL_Players& PlayerA_Attributes, NFL_Play
 
     else if (Relationship_Score >= 85 && Relationship_Score < 100){
         cout << PlayerA_Attributes.Name << " and " << PlayerB_Attributes.Name << " have a great chemistry score of " << Relationship_Score << "\n";
+        if (PlayerA_Attributes.Position_Group == PlayerB_Attributes.Position_Group){
+            std::cout << "These players will strengthen your " << PlayerA_Attributes.Position_Group << " room";
+        }
         cout << "These players will gel very well. Search the player pool for more players with similar relationship scores" << "\n";
         cout << "High relationship scores improve player performance" << "\n";
         return;
@@ -146,6 +161,9 @@ void NFL_Players::Relationship_Remarks(NFL_Players& PlayerA_Attributes, NFL_Play
 
     else if(Relationship_Score == 100){
         cout << PlayerA_Attributes.Name << " and " << PlayerB_Attributes.Name << " have an excellent chemistry score of " << Relationship_Score << "\n";
+        if (PlayerA_Attributes.Position_Group == PlayerB_Attributes.Position_Group){
+            std::cout << "These players will strengthen your " << PlayerA_Attributes.Position_Group << " room";
+        }
         cout << "Excellent selections! Search the player pool for more players with similar relationship scores" << "\n";
         cout << "High relationship scores improve player performance" << "\n";
         return;
@@ -164,6 +182,7 @@ NFL_Players Generate_Player(){
     string Position;
     string College;
     string Position_Group;
+    string Broader_Position_Group;
     int Draft_Year;
 
     cout << "\n\n------Hit Enter to Start!-------";
@@ -191,7 +210,8 @@ NFL_Players Generate_Player(){
     cout << "\n\n";
     Division = Search_Division(Team);
     Position_Group = Search_PositionGroup(Position);
-    NFL_Players Player_Details(Name, Team, Division, Position, College, Position_Group, Draft_Year);
+    Broader_Position_Group = Search_Broader_Position_Group (Position_Group);
+    NFL_Players Player_Details(Name, Team, Division, Position, College, Position_Group, Broader_Position_Group, Draft_Year);
 
     return Player_Details;
 
@@ -221,7 +241,7 @@ string Search_PositionGroup(string Position){
     Offensive_Position_Groups.push_back(Running_Backs);
 
     Defensive_Position_Groups.push_back(Defensive_Line);
-    Defensive_Position_Groups.push_back(Secondary);
+    Defensive_Position_Groups.push_back(Defensive_Backs);
     Defensive_Position_Groups.push_back(Linebackers);
 
     for(vector<set<string>>::iterator Iter = Offensive_Position_Groups.begin(); Iter != Offensive_Position_Groups.end(); Iter++){
@@ -238,4 +258,20 @@ string Search_PositionGroup(string Position){
 
 
     return Position_Group;
+}
+
+string Search_Broader_Position_Group (string Position_Group){
+    
+    string Broader_Position_Group = "Broader Position group not found! Please check spelling of Position!";
+    vector<string>::iterator Offensive_Iter = std::find(Offense.begin(), Offense.end(), Position_Group);
+    if (Offensive_Iter != Offense.end()){
+        Broader_Position_Group = *Offensive_Iter;
+    }
+
+    vector<string>::iterator Defensive_Iter = std::find(Defense.begin(), Defense.end(), Position_Group);
+    if (Defensive_Iter != Defense.end()){
+        Broader_Position_Group = *Defensive_Iter;
+    }
+
+    return Broader_Position_Group;
 }
