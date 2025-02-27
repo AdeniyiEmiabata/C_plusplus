@@ -23,6 +23,7 @@ int main(){
     NFL_Players Player_1 = Generate_Player();
     string empty;
     getline(cin, empty);
+    std::cout << "ENTER DETAILS FOR THE SECOND PLAYER" << "\n";
     NFL_Players Player_2 = Generate_Player();
 
     Player_1.Calculate_Player_Relationship_Score(Player_1, Player_2);
