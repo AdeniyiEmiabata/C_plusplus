@@ -39,7 +39,7 @@ vector<vector<string>> Defensive_Position_Groups;
 int NFL_Players::Calculate_Player_Relationship_Score (NFL_Players& PlayerA_Attributes, NFL_Players& PlayerB_Attributes){
     int Score = 0;
     
-    // TEAM-FOCUSED MAX:100
+    // TEAM-FOCUSED: MAXIMUM 100
     if(PlayerA_Attributes.Team == PlayerB_Attributes.Team){
         Score += 80;
 
@@ -58,7 +58,7 @@ int NFL_Players::Calculate_Player_Relationship_Score (NFL_Players& PlayerA_Attri
         }
     }
 
-    // DIVISION_FOCUSED MAX:90
+    // DIVISION_FOCUSED: MAXIMUM 90
     else if (PlayerA_Attributes.Division == PlayerB_Attributes.Division){
         Score += 60;
 
@@ -84,7 +84,7 @@ int NFL_Players::Calculate_Player_Relationship_Score (NFL_Players& PlayerA_Attri
         }
     }
 
-    // COLLEGE-FOCUSED: 80
+    // COLLEGE-FOCUSED: MAXIMUM 80
     else if(PlayerA_Attributes.College == PlayerB_Attributes.College){
         Score+= 50;
 
@@ -104,7 +104,7 @@ int NFL_Players::Calculate_Player_Relationship_Score (NFL_Players& PlayerA_Attri
         
     }
 
-    //POSITION-GROUP FOCUSED: MAX 55
+    //POSITION-GROUP FOCUSED: MAXIMUM 55
     else if(PlayerA_Attributes.Broader_Position_Group == PlayerB_Attributes.Broader_Position_Group){
         Score += 35;
         if (PlayerA_Attributes.Position_Group == PlayerB_Attributes.Position_Group){
@@ -190,7 +190,7 @@ void NFL_Players::Relationship_Remarks(NFL_Players& PlayerA_Attributes, NFL_Play
         cout << "High relationship scores improve player performance" << "\n";
 
         if((PlayerA_Attributes.Position_Group == "Receivers" && PlayerB_Attributes.Position == "QB") || (PlayerB_Attributes.Position_Group == "Receivers" && PlayerA_Attributes.Position == "QB")){
-            cout << "This QB-WR duo can be the foundation of your offense!\n";
+            cout << "This QB-Receiver duo can be the foundation of your offense!\n";
         }
         return;
     }
